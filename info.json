@@ -1,0 +1,41 @@
+{
+  "skins": [
+    {
+      "AWP | Pit Viper":[
+        {
+          "price": "1,12",
+          "exterior": "FT",
+          "info": "First skin bought"
+      	}
+      ],
+      "AK-47 | Emerald Pinstripe":[
+        {
+          "price": "1,77",
+          "exterior": "FT",
+          "info": "Stickers: Lekr0 | Katowice 2019, Vega Squadron | Krakow 2017, Fnatic | Krakow 2017"
+      	}
+      ],
+      "SG 553 | Pulse":[
+        {
+			    "price": "0,89",
+			    "exterior": "FT",
+			    "info": "Pretty nice profit"
+        }
+      ]
+
+    }
+  ],
+
+  
+  "stickers": [
+    {
+      "Sticker | Vitality (Foil) | Berlin 2019":
+      [
+		  {
+			  "price" : "5,49",
+			  "info": "Feels like a mistake"
+		    }
+		  ]
+    }
+	]
+}
