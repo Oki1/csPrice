@@ -33,11 +33,11 @@ prices = []
 percentage = []
 for x in range(len(skins)):
     name = (skins[x][0]+" ("+skins[x][2]+")").replace(" ","%20")
-    percentage.append([float(priceSetup(name).replace("€","").replace(",",".")),float(skins[x][1].replace(",","."))])
+    percentage.append([float(priceSetup(name).replace("€","").replace(",",".").replace("-","0")),float(skins[x][1].replace(",","."))])
     prices.append(priceSetup(name))
 for y in range(len(stickers)):
     name = stickers[y][0].replace(" ","%20")
-    percentage.append([float(priceSetup(name).replace("€","").replace(",",".")),float(stickers[y][1].replace(",","."))])
+    percentage.append([float(priceSetup(name).replace("€","").replace(",",".").replace("-","0")),float(stickers[y][1].replace(",","."))])
     prices.append(priceSetup(name))
 prcnt = []
 for x in percentage:
@@ -51,8 +51,4 @@ for sticker in stickers:
     table[0].append(sticker[0])
     table[1].append(sticker[1]+"€")
     table[4].append(sticker[2])
-print(table)
 print(tabulate(table))
-
-
-print(stickerSetup())
