@@ -1,63 +1,58 @@
 from urllib.request import urlopen
 from json import *
 from tabulate import tabulate
-notes = []
-def setup():
-    with open(r"C:\Users\Castor\Desktop\steamPrice\skins.txt") as mine:
-        z = []
-        for x in mine.read().split("\n"):
-            if(x != ""):
-                z.append(x)
-        y = []
-        for i in range(0, len(z), 4):
-            y.append(z[i:i+4])
-    return(y)
+#http://steamcommunity.com/market/priceoverview/?appid=730&currency=3&market_hash_name=
 
+def skinSetup():
+    with open("skins.txt") as f:
+        string = f.read()
+        split= string.split("\n")
+        split.remove("")
+        ret = []
+        for x in range(0,len(split),4):
+            ret.append(split[x:x+4])
+        return ret
+def stickerSetup():
+    with open("stickers.txt") as f:
+        string = f.read()
+        split= string.split("\n")
+        split.remove("")
+        ret = []
+        for x in range(0,len(split),3):
+            ret.append(split[x:x+3])
+        return ret
 
-def getprices(name):
-    returns = []
-    with urlopen(r"http://steamcommunity.com/market/priceoverview/?appid=730&currency=3&market_hash_name="+ name.replace(" ", "%20")) as f:
-        returns.append(loads(f.read())["lowest_price"])
-    return(returns)
-
+def priceSetup(name):
+    with urlopen(r"http://steamcommunity.com/market/priceoverview/?appid=730&currency=3&market_hash_name="+name) as u:
+        return  (loads(u.read())["lowest_price"])
 def percent(x,y):
     return(str(round((x/y)*100))+"%")
-stuff = setup()
-pricesOld = []
-pricesNew = []
-for x in range(len(stuff)):
-    pricesOld.append(stuff[x][1]+"€")
-    pricesNew.append(*getprices(stuff[x][0]+" ("+stuff[x][2]+")"))
-    notes.append(stuff[x][3])
-tbl = []
-v = []
-uglycode = []
-for x in stuff:
-    v.append(x[0])
-v.insert(0, "NAME")
-tbl.append(tuple(v))
-v=[]
-everymoreuglycode=[]
-for x in pricesOld:
-    v.append(x)
-uglycode.append(v)
-#v.insert(0, "BOUGHT")
-tbl.append(tuple(["BOUGHT"]+v))
-v=[]
+skins = skinSetup()
+stickers=stickerSetup()
+prices = []
+percentage = []
+for x in range(len(skins)):
+    name = (skins[x][0]+" ("+skins[x][2]+")").replace(" ","%20")
+    percentage.append([float(priceSetup(name).replace("€","").replace(",",".")),float(skins[x][1].replace(",","."))])
+    prices.append(priceSetup(name))
+for y in range(len(stickers)):
+    name = stickers[y][0].replace(" ","%20")
+    percentage.append([float(priceSetup(name).replace("€","").replace(",",".")),float(stickers[y][1].replace(",","."))])
+    prices.append(priceSetup(name))
+prcnt = []
+for x in percentage:
+    prcnt.append(percent(*x))
+table = [["name"],["buy price"],["current price",*prices],["percent",*prcnt],["info"]]
+for skin in skins:
+    table[0].append(skin[0]+" ("+skin[2]+")")
+    table[1].append(skin[1]+"€")
+    table[4].append(skin[3])
+for sticker in stickers:
+    table[0].append(sticker[0])
+    table[1].append(sticker[1]+"€")
+    table[4].append(sticker[2])
+print(table)
+print(tabulate(table))
 
-for x in pricesNew:
-    v.append(x)
 
-uglycode.append(v)
-#v.insert(0, "CURRENT")
-tbl.append(tuple(["CURRENT"]+v))
-
-for x in range(len(uglycode[0])):
-    everymoreuglycode.append(percent(float(uglycode[1][x].replace("€", "").replace(",", ".").replace("-","0")), float(uglycode[0][x].replace("€", "").replace(",", ".").replace("-","0"))))
-everymoreuglycode.insert(0, "PERCENT")
-tbl.append(tuple(everymoreuglycode))
-tbl.append(tuple(["NOTES"]+notes))
-
-print(tabulate(tbl))
-
-input()
+print(stickerSetup())
