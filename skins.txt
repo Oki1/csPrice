@@ -7,3 +7,8 @@ SG 553 | Pulse
 0,89
 Field-Tested
 Pretty nice profit
+
+USP-S | Flashback
+1,12
+Minimal Wear
+Play skin

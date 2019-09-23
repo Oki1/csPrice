@@ -7,7 +7,8 @@ def skinSetup():
     with open("skins.txt") as f:
         string = f.read()
         split= string.split("\n")
-        split.remove("")
+        while("" in split):
+            split.remove("")
         ret = []
         for x in range(0,len(split),4):
             ret.append(split[x:x+4])
